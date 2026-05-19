@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 9: Robots — Revision Worksheet</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue: #1a56db;
+    --blue-light: #e8f0fe;
+    --blue-mid: #3b82f6;
+    --green: #059669;
+    --green-light: #d1fae5;
+    --red: #dc2626;
+    --red-light: #fee2e2;
+    --amber: #d97706;
+    --amber-light: #fef3c7;
+    --gray-50: #f8fafc;
+    --gray-100: #f1f5f9;
+    --gray-200: #e2e8f0;
+    --gray-300: #cbd5e1;
+    --gray-400: #94a3b8;
+    --gray-600: #475569;
+    --gray-700: #334155;
+    --gray-800: #1e293b;
+    --gray-900: #0f172a;
+    --serif: 'DM Serif Display', serif;
+    --sans: 'DM Sans', sans-serif;
+    --mono: 'Space Mono', monospace;
+    --radius: 12px;
+    --radius-sm: 6px;
+  }
+
+  body {
+    font-family: var(--sans);
+    background: #f0f4ff;
+    color: var(--gray-800);
+    min-height: 100vh;
+    padding: 2rem 1rem 4rem;
+  }
+
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--gray-900);
+    border-radius: 20px;
+    padding: 2rem 2.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '🤖';
+    position: absolute;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 80px;
+    opacity: 0.12;
+  }
+  .header-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--blue-mid);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .header h1 {
+    font-family: var(--serif);
+    font-size: 32px;
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+  .header-meta {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .meta-field {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .meta-label {
+    font-size: 12px;
+    color: var(--gray-400);
+    font-weight: 500;
+  }
+  .meta-input {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: var(--radius-sm);
+    padding: 5px 10px;
+    color: #fff;
+    font-size: 13px;
+    font-family: var(--sans);
+    width: 180px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .meta-input:focus { border-color: var(--blue-mid); }
+  .meta-input::placeholder { color: rgba(255,255,255,0.3); }
+
+  /* CHECKLIST */
+  .checklist-card {
+    background: var(--blue-light);
+    border: 1.5px solid #bfdbfe;
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .checklist-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 1rem;
+  }
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 6px 0;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .check-item:hover { opacity: 0.85; }
+  .check-box {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #93c5fd;
+    border-radius: 4px;
+    background: #fff;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    font-size: 12px;
+  }
+  .check-item.done .check-box {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: #fff;
+  }
+  .check-item.done .check-text {
+    text-decoration: line-through;
+    color: #64748b;
+  }
+  .check-text {
+    font-size: 13.5px;
+    color: var(--gray-700);
+    line-height: 1.5;
+  }
+
+  /* SECTIONS */
+  .section {
+    background: #fff;
+    border-radius: var(--radius);
+    border: 1.5px solid var(--gray-200);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    animation: slideIn 0.3s ease both;
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .section-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1.5px solid var(--gray-100);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--gray-900);
+    color: #fff;
+    font-family: var(--mono);
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .section-name {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--gray-900);
+  }
+  .section-sub {
+    font-size: 12px;
+    color: var(--gray-400);
+    margin-left: auto;
+    font-family: var(--mono);
+  }
+  .section-body { padding: 1.25rem 1.5rem; }
+
+  /* WORD BANK */
+  .wordbank {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 1rem;
+    padding: 10px 12px;
+    background: var(--gray-50);
+    border-radius: var(--radius-sm);
+    border: 1px dashed var(--gray-300);
+  }
+  .wordbank-label {
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--gray-400);
+    width: 100%;
+    margin-bottom: 4px;
+  }
+  .wb-chip {
+    font-size: 13px;
+    font-weight: 500;
+    padding: 4px 12px;
+    background: #fff;
+    border: 1.5px solid var(--gray-300);
+    border-radius: 99px;
+    color: var(--gray-700);
+    cursor: default;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .wb-chip.used {
+    opacity: 0.3;
+    text-decoration: line-through;
+  }
+
+  /* QUESTIONS */
+  .q-row {
+    display: grid;
+    grid-template-columns: 26px 1fr auto;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+  .q-row:last-child { border-bottom: none; }
+  .q-n {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--gray-400);
+    text-align: right;
+  }
+  .q-text {
+    font-size: 14px;
+    color: var(--gray-700);
+    line-height: 1.5;
+  }
+  .q-text em { font-style: normal; font-weight: 600; color: var(--gray-900); }
+  .q-ans {
+    font-family: var(--sans);
+    font-size: 13px;
+    border: none;
+    border-bottom: 2px solid var(--gray-300);
+    padding: 3px 6px;
+    width: 130px;
+    background: transparent;
+    color: var(--gray-800);
+    outline: none;
+    transition: border-color 0.2s;
+    text-align: center;
+  }
+  .q-ans:focus { border-color: var(--blue); }
+  .q-ans.correct { border-color: var(--green); color: var(--green); background: var(--green-light); border-radius: 4px; }
+  .q-ans.wrong { border-color: var(--red); color: var(--red); background: var(--red-light); border-radius: 4px; }
+
+  /* SELECT STYLE */
+  .q-select {
+    font-family: var(--sans);
+    font-size: 13px;
+    border: 1.5px solid var(--gray-300);
+    border-radius: var(--radius-sm);
+    padding: 4px 8px;
+    background: #fff;
+    color: var(--gray-700);
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s;
+    min-width: 130px;
+  }
+  .q-select:focus { border-color: var(--blue); }
+  .q-select.correct { border-color: var(--green); background: var(--green-light); color: var(--green); font-weight: 600; }
+  .q-select.wrong { border-color: var(--red); background: var(--red-light); color: var(--red); font-weight: 600; }
+
+  /* ACTIONS */
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+  }
+  .btn {
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 24px;
+    border-radius: 99px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-check {
+    background: var(--gray-900);
+    color: #fff;
+  }
+  .btn-check:hover { background: var(--gray-700); }
+  .btn-clear {
+    background: var(--gray-100);
+    color: var(--gray-600);
+  }
+  .btn-clear:hover { background: var(--gray-200); }
+  .btn-answers {
+    background: var(--blue-light);
+    color: var(--blue);
+    margin-left: auto;
+  }
+  .btn-answers:hover { background: #c7d7fe; }
+
+  /* SCORE */
+  .score-wrap {
+    margin-top: 1.25rem;
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius);
+    display: none;
+    align-items: center;
+    gap: 16px;
+    animation: slideIn 0.3s ease both;
+  }
+  .score-wrap.visible { display: flex; }
+  .score-wrap.great { background: var(--green-light); border: 1.5px solid #6ee7b7; }
+  .score-wrap.ok { background: var(--amber-light); border: 1.5px solid #fcd34d; }
+  .score-wrap.low { background: var(--red-light); border: 1.5px solid #fca5a5; }
+  .score-big {
+    font-family: var(--serif);
+    font-size: 36px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .score-wrap.great .score-big { color: var(--green); }
+  .score-wrap.ok .score-big { color: var(--amber); }
+  .score-wrap.low .score-big { color: var(--red); }
+  .score-text { font-size: 14px; color: var(--gray-700); }
+  .score-text strong { display: block; font-size: 15px; color: var(--gray-900); margin-bottom: 2px; }
+
+  .progress-bar {
+    height: 6px;
+    background: var(--gray-200);
+    border-radius: 99px;
+    overflow: hidden;
+    margin-top: 8px;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: var(--blue);
+    transition: width 0.6s ease;
+    width: 0%;
+  }
+
+  @media (max-width: 560px) {
+    .header h1 { font-size: 24px; }
+    .section-body { padding: 1rem; }
+    .q-ans, .q-select { width: 110px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="header-tag">English · Unit 9</div>
+    <h1>Robots<br>Revision Worksheet</h1>
+    <div class="header-meta">
+      <div class="meta-field">
+        <span class="meta-label">Name</span>
+        <input class="meta-input" type="text" placeholder="Your name...">
+      </div>
+      <div class="meta-field">
+        <span class="meta-label">Date</span>
+        <input class="meta-input" type="text" value="May 19, 2026">
+      </div>
+    </div>
+  </div>
+
+  <!-- CHECKLIST -->
+  <div class="checklist-card">
+    <div class="checklist-title">✓ Revision checklist — tap to tick off</div>
+    <div id="checklist"></div>
+  </div>
+
+  <!-- VOCAB 1 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div>
+        <div class="section-name">Vocabulary 1</div>
+      </div>
+      <div class="section-sub">choose the correct word</div>
+    </div>
+    <div class="section-body" id="v1"></div>
+  </div>
+
+  <!-- VOCAB 2 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div>
+        <div class="section-name">Vocabulary 2</div>
+      </div>
+      <div class="section-sub">word bank</div>
+    </div>
+    <div class="section-body">
+      <div class="wordbank" id="wb2">
+        <div class="wordbank-label">word bank</div>
+      </div>
+      <div id="v2"></div>
+    </div>
+  </div>
+
+  <!-- GRAMMAR 1 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div>
+        <div class="section-name">Grammar 1</div>
+      </div>
+      <div class="section-sub">choose the correct answer</div>
+    </div>
+    <div class="section-body" id="g1"></div>
+  </div>
+
+  <!-- GRAMMAR 2 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div>
+        <div class="section-name">Grammar 2</div>
+      </div>
+      <div class="section-sub">word bank</div>
+    </div>
+    <div class="section-body">
+      <div class="wordbank" id="wb4">
+        <div class="wordbank-label">word bank</div>
+      </div>
+      <div id="g2"></div>
+    </div>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="actions">
+    <button class="btn btn-check" onclick="checkAll()">Check answers</button>
+    <button class="btn btn-clear" onclick="clearAll()">Clear all</button>
+    <button class="btn btn-answers" onclick="showAnswers()">Show answers</button>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-bar" style="margin-top:1rem;">
+    <div class="progress-fill" id="progress"></div>
+  </div>
+
+  <!-- SCORE -->
+  <div class="score-wrap" id="score">
+    <div class="score-big" id="score-num"></div>
+    <div class="score-text">
+      <strong id="score-title"></strong>
+      <span id="score-msg"></span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const checks = [
+  "I can use words about size and description: big, small, huge, tiny, wide, narrow, long, short, heavy, light.",
+  "I can use superlatives: the biggest, the smallest, the longest, the heaviest, the lightest.",
+  "I know these Unit 9 words: robot, tools, factories, rescue, search, explore, operations.",
+  "I can use: much, many, some, any, a few, a little.",
+  "I can use object pronouns: me, you, us, them.",
+  "I can write instructions using: First, Next, Then, Finally."
+];
+
+const v1Qs = [
+  { n:1,  text: 'A whale is ___ .', opts: ['huge','tiny'], ans: 'huge' },
+  { n:2,  text: 'This box is very ___ . I can carry it easily.', opts: ['light','long'], ans: 'light' },
+  { n:3,  text: 'That road is ___ . Four cars can drive on it.', opts: ['narrow','wide'], ans: 'wide' },
+  { n:4,  text: 'My pencil is ___ .', opts: ['short','heavy'], ans: 'short' },
+  { n:5,  text: 'These are the ___ shoes in the shop.', opts: ['biggest','smallest'], ans: 'biggest' },
+];
+
+const v2Qs = [
+  { n:6,  text: 'People make cars and machines here.',               ans: 'factories' },
+  { n:7,  text: 'You do this when you look for something.',          ans: 'search' },
+  { n:8,  text: 'Doctors do these in hospitals.',                    ans: 'operations' },
+  { n:9,  text: 'We use these to fix things.',                       ans: 'tools' },
+  { n:10, text: 'You do this when you save someone from danger.',    ans: 'rescue' },
+];
+const wb2Words = ['tools','rescue','factories','search','operations'];
+
+const g1Qs = [
+  { n:11, text: "There isn't ___ milk in the glass.",           opts:['many','much','few'],          ans:'much' },
+  { n:12, text: 'There are ___ apples on the table.',           opts:['a few','a little','much'],    ans:'a few' },
+  { n:13, text: 'Do you have ___ rice?',                        opts:['any','many','few'],           ans:'any' },
+  { n:14, text: 'Can I have ___ water, please?',                opts:['a little','a few','many'],    ans:'a little' },
+  { n:15, text: 'There are ___ robots in the museum.',          opts:['much','many','a little'],     ans:'many' },
+];
+
+const g2Qs = [
+  { n:16, text: '___ , wash the fruit.',                        ans:'First' },
+  { n:17, text: 'Robots give ___ information.',                 ans:'us' },
+  { n:18, text: '___ animals are fast, but other animals are slow.', ans:'Some' },
+  { n:19, text: '___ , put the drink in the glass.',            ans:'Finally' },
+  { n:20, text: '___ robots work in hospitals.',                ans:'Other' },
+];
+const wb4Words = ['First','Finally','Other','us','Some'];
+
+// Build checklist
+const clEl = document.getElementById('checklist');
+checks.forEach((t, i) => {
+  const d = document.createElement('div');
+  d.className = 'check-item';
+  d.innerHTML = `<div class="check-box" id="cb${i}"></div><span class="check-text">${t}</span>`;
+  d.onclick = () => {
+    d.classList.toggle('done');
+    document.getElementById('cb'+i).textContent = d.classList.contains('done') ? '✓' : '';
+  };
+  clEl.appendChild(d);
+});
+
+// Build select questions (vocab 1, grammar 1)
+function buildSelect(containerId, questions) {
+  const c = document.getElementById(containerId);
+  questions.forEach(q => {
+    const row = document.createElement('div');
+    row.className = 'q-row';
+    const sel = `<select class="q-select" data-ans="${q.ans}" id="q${q.n}">
+      <option value="">— select —</option>
+      ${q.opts.map(o => `<option value="${o}">${o}</option>`).join('')}
+    </select>`;
+    row.innerHTML = `<span class="q-n">${q.n}</span><span class="q-text">${q.text.replace('___','<em>___</em>')}</span>${sel}`;
+    c.appendChild(row);
+  });
+}
+
+// Build text input questions (vocab 2, grammar 2)
+function buildInput(containerId, questions) {
+  const c = document.getElementById(containerId);
+  questions.forEach(q => {
+    const row = document.createElement('div');
+    row.className = 'q-row';
+    row.innerHTML = `<span class="q-n">${q.n}</span>
+      <span class="q-text">${q.text}</span>
+      <input class="q-ans" type="text" id="q${q.n}" data-ans="${q.ans}" placeholder="answer..." autocomplete="off" spellcheck="false">`;
+    c.appendChild(row);
+  });
+}
+
+// Build word bank chips
+function buildWB(id, words) {
+  const wb = document.getElementById(id);
+  words.forEach(w => {
+    const chip = document.createElement('span');
+    chip.className = 'wb-chip';
+    chip.textContent = w;
+    chip.id = 'wb-' + id + '-' + w;
+    wb.appendChild(chip);
+  });
+}
+
+// Wire up input to mark word bank as used
+function wireWBInputs(containerId, words, wbId) {
+  const inputs = document.getElementById(containerId).querySelectorAll('.q-ans');
+  function refresh() {
+    const used = new Set([...inputs].map(i => i.value.trim().toLowerCase()));
+    words.forEach(w => {
+      const chip = document.getElementById('wb-' + wbId + '-' + w);
+      if (chip) chip.classList.toggle('used', used.has(w.toLowerCase()));
+    });
+  }
+  inputs.forEach(i => i.addEventListener('input', refresh));
+}
+
+buildSelect('v1', v1Qs);
+buildInput('v2', v2Qs);
+buildWB('wb2', wb2Words);
+wireWBInputs('v2', wb2Words, 'wb2');
+
+buildSelect('g1', g1Qs);
+buildInput('g2', g2Qs);
+buildWB('wb4', wb4Words);
+wireWBInputs('g2', wb4Words, 'wb4');
+
+function checkAll() {
+  let correct = 0, total = 0;
+  document.querySelectorAll('[data-ans]').forEach(el => {
+    const ans = el.dataset.ans.toLowerCase().trim();
+    const val = el.value.toLowerCase().trim();
+    el.classList.remove('correct','wrong');
+    if (!val || val === '') return;
+    total++;
+    if (val === ans) { el.classList.add('correct'); correct++; }
+    else el.classList.add('wrong');
+  });
+  const allInputs = document.querySelectorAll('[data-ans]').length;
+  const pct = Math.round((correct / allInputs) * 100);
+  document.getElementById('progress').style.width = pct + '%';
+
+  const sw = document.getElementById('score');
+  sw.className = 'score-wrap visible ' + (pct >= 80 ? 'great' : pct >= 50 ? 'ok' : 'low');
+  document.getElementById('score-num').textContent = correct + '/' + allInputs;
+
+  const msgs = {
+    great: ['Excellent work! 🎉', 'You have a strong grasp of all the unit vocabulary and grammar.'],
+    ok:    ['Good effort! 👍',    'Review the highlighted answers and try again.'],
+    low:   ['Keep practising! 💪','Go back through your notes and try once more.']
+  };
+  const tier = pct >= 80 ? 'great' : pct >= 50 ? 'ok' : 'low';
+  document.getElementById('score-title').textContent = msgs[tier][0];
+  document.getElementById('score-msg').textContent   = msgs[tier][1];
+}
+
+function clearAll() {
+  document.querySelectorAll('[data-ans]').forEach(el => {
+    el.classList.remove('correct','wrong');
+    if (el.tagName === 'INPUT') el.value = '';
+    else el.value = '';
+  });
+  document.querySelectorAll('.wb-chip').forEach(c => c.classList.remove('used'));
+  document.getElementById('progress').style.width = '0%';
+  document.getElementById('score').className = 'score-wrap';
+}
+
+function showAnswers() {
+  document.querySelectorAll('[data-ans]').forEach(el => {
+    el.value = el.dataset.ans;
+    el.classList.remove('wrong');
+    el.classList.add('correct');
+  });
+  document.getElementById('progress').style.width = '100%';
+  const sw = document.getElementById('score');
+  sw.className = 'score-wrap visible great';
+  document.getElementById('score-num').textContent = '20/20';
+  document.getElementById('score-title').textContent = 'All answers shown ✓';
+  document.getElementById('score-msg').textContent = 'Study each answer carefully, then clear and try on your own!';
+  // mark all wb chips used
+  document.querySelectorAll('.wb-chip').forEach(c => c.classList.add('used'));
+}
+</script>
+</body>
+</html>
